@@ -1,5 +1,6 @@
 # =========================
-FROM ubuntu:latest AS builder
+FROM ubuntu:22.04 AS builder
+ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y bash git cmake make python3 nodejs npm curl
 
 WORKDIR /emsdk
@@ -20,18 +21,15 @@ RUN emmake make VERBOSE=2
 FROM node:20 AS frontend
 
 WORKDIR /app
-COPY --from=builder /app/wasm/build/*.js /app/src/wasm/
-COPY --from=builder /app/wasm/build/*.wasm /app/src/wasm/
-COPY --from=builder /app/wasm/build/*.map /app/src/wasm/
 COPY react-app/ .
+COPY --from=builder /app/wasm/build/*.js /app/wasm/build/*.wasm /app/src/wasm/
+# COPY --from=builder /app/wasm/build/*.map /app/src/wasm/
 RUN npm install && npm run build
 
 # =========================
 FROM nginx:latest
 
-RUN echo '....'
 COPY --from=frontend /app/dist /usr/share/nginx/html
-COPY --from=builder /app/wasm/build/*.map /usr/share/nginx/html
-RUN ls -la /usr/share/nginx/html
+# COPY --from=builder /app/wasm/build/*.map /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]

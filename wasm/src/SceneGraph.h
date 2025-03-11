@@ -23,7 +23,7 @@ public:
     std::vector<std::shared_ptr<SceneNode>> nodes;
 
     void addNode(std::string id, float x, float y, float width, float height, std::string color);
-    std::vector<std::shared_ptr<SceneNode>> getNodes();
+    std::vector<SceneNode*> getNodes();
 };
 
 extern "C" SceneGraph* createSceneGraph();

@@ -42,9 +42,9 @@ cd react-app
 npm install && npm run start
 
 ## Repetitively
-cd ../wasm/build && emmake make VERBOSE=2 && cd - && npm run start
+cd ../wasm/build && emmake make VERBOSE=2 && cd - && cp -v ../wasm/build/*.js ../wasm/build/*.wasm ../wasm/build/*.map src/wasm/ && npm start
 
-cd ../wasm/build && emcmake cmake .. -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_CXX_FLAGS="-gsource-map" && emmake make VERBOSE=2 && cd - && npm run start
+cd ../wasm/build && emcmake cmake .. -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_CXX_FLAGS="-gsource-map" && emmake make VERBOSE=2 && cd - && cp -v ../wasm/build/*.js ../wasm/build/*.wasm ../wasm/build/*.map src/wasm/ && npm start
 
 
 # =========================

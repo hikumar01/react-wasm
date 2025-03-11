@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 import ReactDOM from 'react-dom/client';
-import SceneGraphRenderer from "./SceneGraphRenderer.jsx";
+import SceneGraphRenderer from './SceneGraphRenderer.jsx';
 
 class App extends React.Component {
     render() {

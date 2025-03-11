@@ -1,43 +1,44 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const isDevelopment = process.env.NODE_ENV !== 'production';
 
 module.exports = {
-    entry: "./src/App.jsx",
+    entry: path.resolve(__dirname, 'src/App.jsx'),
     output: {
-        path: path.resolve(__dirname, "dist"),
-        filename: "bundle.js",
-        sourceMapFilename: "[file].map"
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'bundle.js',
+        sourceMapFilename: isDevelopment ? '[file].map' : undefined
     },
-    devtool: "source-map",
+    devtool: isDevelopment ? 'source-map' : undefined,
     module: {
         rules: [
             {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
                 use: {
-                    loader: "babel-loader",
+                    loader: 'babel-loader',
                     options: {
-                        presets: ["@babel/preset-react"]
+                        presets: ['@babel/preset-react']
                     }
                 }
             },
             {
                 test: /\.css$/,
-                use: ["style-loader", "css-loader"],
+                use: ['style-loader', 'css-loader'],
             },
             {
                 test: /\.wasm$/,
-                type: "asset/resource",
+                type: 'asset/resource',
                 generator: {
-                    filename: "[name][ext]"
+                    filename: '[name][ext]'
                 }
             }
         ]
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: "./public/index.html",
-            filename: "index.html",
+            template: './public/index.html',
+            filename: 'index.html',
             favicon: './public/favicon.ico',
         }),
     ],
@@ -46,10 +47,10 @@ module.exports = {
         topLevelAwait: true
     },
     resolve: {
-        extensions: [".js", ".jsx", ".wasm"]
+        extensions: ['.js', '.jsx', '.wasm']
     },
     devServer: {
-        static: "./public",
+        static: './public',
         port: 8080,
         open: false
     }
